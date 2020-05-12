@@ -1,0 +1,1208 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1251">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="PDU_SMS.files/filelist.xml">
+<title>Использование PDU формата для оповещения через SMS сообщения</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="metricconverter"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>alex</o:Author>
+  <o:LastAuthor>alex</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>507</o:TotalTime>
+  <o:Created>2013-11-04T20:54:00Z</o:Created>
+  <o:LastSaved>2013-11-04T20:59:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1611</o:Words>
+  <o:Characters>9187</o:Characters>
+  <o:Company>home</o:Company>
+  <o:Lines>76</o:Lines>
+  <o:Paragraphs>21</o:Paragraphs>
+  <o:CharactersWithSpaces>10777</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:419.6pt 21.0cm;
+	margin:42.55pt 42.55pt 42.55pt 2.0cm;
+	mso-header-margin:35.45pt;
+	mso-footer-margin:35.45pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Обычная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableSimple2
+	{mso-style-name:"Простая таблица 2";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableSimple2FirstRow
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:first-row;
+	mso-tstyle-border-bottom:1.5pt solid black;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableSimple2LastRow
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:last-row;
+	mso-tstyle-border-top:.75pt solid black;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	color:windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableSimple2FirstCol
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:first-column;
+	mso-tstyle-border-right:1.5pt solid black;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableSimple2LastCol
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:last-column;
+	mso-tstyle-border-left:.75pt solid black;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableSimple2NECell
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:ne-cell;
+	mso-tstyle-border-left:0cm none windowtext;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableSimple2SWCell
+	{mso-style-name:"Простая таблица 2";
+	mso-table-condition:sw-cell;
+	mso-tstyle-border-top:0cm none windowtext;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableProfessional
+	{mso-style-name:"Стандартная таблица";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid black 1.0pt;
+	mso-border-alt:solid black .75pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.75pt solid black;
+	mso-border-insidev:.75pt solid black;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableProfessionalFirstRow
+	{mso-style-name:"Стандартная таблица";
+	mso-table-condition:first-row;
+	mso-tstyle-shading:white;
+	mso-tstyle-pattern:solid black;
+	mso-tstyle-diagonal-down:0cm none windowtext;
+	mso-tstyle-diagonal-up:0cm none windowtext;
+	color:windowtext;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableGrid
+	{mso-style-name:"Сетка таблицы";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+</head>
+
+<body lang=RU style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>ИСПОЛЬЗОВАНИЕ </b><b style='mso-bidi-font-weight:normal'><span
+lang=EN-US style='mso-ansi-language:EN-US'>PDU</span><span lang=EN-US> </span>ФОРМАТА
+ДЛЯ ОПОВЕЩЕНИЯ ЧЕРЕЗ<span style='mso-spacerun:yes'>  </span></b><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='mso-ansi-language:
+EN-US'>SMS</span><span lang=EN-US> </span>СООБЩЕНИЯ<o:p></o:p></b></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Много внимания в настоящее время уделяется системам
+оповещения с использованием устройств на базе микроконтроллеров, к которым
+подключены<span style='mso-spacerun:yes'>  </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>GSM</span><span lang=EN-US> </span>модули. Например,
+если температура превышает некоторое значение, пропадает напряжение в
+осветительной сети, несанкционированно вскрывается дверь в помещение, то
+срабатывают датчики, подключенные к микроконтроллеру. В результате
+микроконтроллером<span style='mso-spacerun:yes'>  </span>формируется SMS сообщение,
+которое передается <span lang=EN-US style='mso-ansi-language:EN-US'>GSM</span>
+модулю. А тот посылает его на мобильный телефон абонента. С целью уменьшения
+стоимости конструкции возможно использование вместо <span lang=EN-US
+style='mso-ansi-language:EN-US'>GSM</span> модуля устаревших мобильных
+телефонов, поддерживающих <span lang=EN-US style='mso-ansi-language:EN-US'>AT</span><span
+lang=EN-US> </span>команды которые можно передавать через последовательный
+интерфейс (<span lang=EN-US style='mso-ansi-language:EN-US'>UART</span>).<span
+style='mso-spacerun:yes'>  </span>Однако проблема состоит в том, что
+большинство таких телефонов при передаче сообщений используют только <span
+lang=EN-US style='mso-ansi-language:EN-US'>PDU</span> формат.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Согласно GSM 03.40 <span lang=EN-US style='mso-ansi-language:
+EN-US'>version</span> 6.0.0 сервис коротких сообщений (<span lang=EN-US
+style='mso-ansi-language:EN-US'>Point</span>-<span lang=EN-US style='mso-ansi-language:
+EN-US'>to</span>-<span lang=EN-US style='mso-ansi-language:EN-US'>Point</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Short</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Message</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Service</span>
+или, сокращенно, SMS) предоставляет возможности посылки и приема сообщений
+ограниченного размера мобильными телефонами. Эта возможность обеспечивается при
+помощи SMSC - <span lang=EN-US style='mso-ansi-language:EN-US'>Short</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Message</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Service</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Center</span>
+(сервисный центр коротких сообщений, центр обслуживания коротких сообщений),
+который обеспечивает хранение принятых сообщений и дальнейшую их передачу
+адресатам. В свою очередь в сервисе SMS определены два сервиса типа
+точка-точка: сервис по доставке сообщения от мобильного телефона до Сервисного
+Центра Коротких сообщений (<span lang=EN-US style='mso-ansi-language:EN-US'>Mobile</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>originated</span>)
+и сервис по доставке сообщения от Сервисного Центра Коротких сообщений до
+мобильного телефона (<span lang=EN-US style='mso-ansi-language:EN-US'>Mobile</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>terminated</span>).</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Таким образом, отправленное сообщение сначала
+принимается оборудованием Сервисного Центра, а он затем пытается передать
+сообщение адресату. Если доставка невозможна, например, телефон адресата вне
+зоны действия сети, Сервисный Центр сохраняет сообщение и продолжает попытки
+доставить сообщение адресату. Если сообщение доставлено или его время жизни
+истекло, оно удаляется.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Сервисы базируются на обмене PDU (<span lang=EN-US
+style='mso-ansi-language:EN-US'>Protocol</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Data</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Units</span> или <span lang=EN-US
+style='mso-ansi-language:EN-US'>Packet</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Data</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Unit</span>, пакетов данных
+протокола). PDU имеют бинарное представление для повышения эффективности
+передачи.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><span style='mso-tab-count:1'>            </span>Для
+отправки сообщения достаточно правильно сформировать PDU (пакет данных
+протокола) и при помощи АТ команд отправить их мобильному оборудованию </p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Аналогично происходит и прием сообщений – необходимо
+при помощи AT команд прочитать PDU и распаковать его (превратить в текстовый
+вид).</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Передачу SMS обеспечивает PDU типа <b><span
+lang=EN-US style='mso-ansi-language:EN-US'>SMS</span>-</b><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Deliver</span><span lang=EN-US> </span></b>(<span
+lang=EN-US style='mso-ansi-language:EN-US'>Mobile</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Terminated</span>), прием <span
+lang=EN-GB style='mso-ansi-language:EN-GB'>SMS</span><span lang=EN-GB> </span>обеспечивает
+<span lang=EN-GB style='mso-ansi-language:EN-GB'>PDU</span><span lang=EN-GB> </span>типа
+<b><span lang=EN-GB style='mso-ansi-language:EN-GB'>SMS</span>-</b><b><span
+lang=EN-GB style='mso-ansi-language:EN-GB'>Submit</span><span lang=EN-GB> </span></b>(<span
+lang=EN-GB style='mso-ansi-language:EN-GB'>Mobile</span><span lang=EN-GB> </span><span
+lang=EN-GB style='mso-ansi-language:EN-GB'>Originated</span>). Представление
+данных в PDU происходит от нескольких методов шестнадцатеричного представления
+данных - «чистых» шестнадцатеричных чисел, десятичных чисел и символьного представления
+чисел. Так, к примеру, некоторые поля PDU сжаты в байты. Один байт в этом
+случае – это 2 шестнадцатеричные цифры. Также применяются термины октет и <span
+class=SpellE>полуоктет</span> для 8 и 4 бит соответственно. Иногда данные
+представляются как десятичные цифры, тогда для представления одной десятичной
+цифры достаточно 4 бит (<span class=SpellE>тетрада</span>).</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>В общем виде PDU состоит из <b>SCA </b>и <b>TPDU<o:p></o:p></b></p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><b>PDU = SCA + TPDU</b>, где</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><b>SCA </b>- <span lang=EN-US style='mso-ansi-language:
+EN-US'>Service</span><span lang=EN-US> </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>Centre</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Address</span> - адрес сервисного
+центра рассылки коротких сообщений;</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><b><span lang=EN-GB style='mso-ansi-language:EN-GB'>TPDU </span></b><span
+lang=EN-GB style='mso-ansi-language:EN-GB'>- Transport Protocol Data Unit – </span>пакет<span
+style='mso-ansi-language:EN-GB'> </span>данных<span style='mso-ansi-language:
+EN-GB'> </span>транспортного<span lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>протокола.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Поле TPDU состоит из заголовка, содержащего
+информацию о содержании PDU и пакет данных. Некоторые модели мобильных
+телефонов и GSM модемов не поддерживают полный формат PDU и могут работать
+только с форматом TPDU. В этом случае SCA берется из памяти SIM-карты, а поле
+SCA заменяется на 00h. </p>
+
+<p style='margin:0cm;margin-bottom:.0001pt;text-align:justify'>Формат
+исходящего сообщения представлен в таблице 1</p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Таблица
+1</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="96%"
+ style='width:96.02%;margin-left:5.4pt;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+ mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width="9%" valign=top style='width:9.62%;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1-12 байт </p>
+  </td>
+  <td width="12%" valign=top style='width:12.48%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 байт </p>
+  </td>
+  <td width="10%" valign=top style='width:10.2%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 байт </p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>2-12 байт </p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 байт </p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 байт </p>
+  </td>
+  <td width="12%" valign=top style='width:12.56%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>0, 1 или 7 байт </p>
+  </td>
+  <td width="10%" valign=top style='width:10.84%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 байт </p>
+  </td>
+  <td width="12%" valign=top style='width:12.26%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>0-140 байт </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+  <td width="9%" valign=top style='width:9.62%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>SCA </p>
+  </td>
+  <td width="12%" valign=top style='width:12.48%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+  style='mso-ansi-language:EN-US'>PDU-type </span></p>
+  </td>
+  <td width="10%" valign=top style='width:10.2%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>MR </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>DA </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>PID </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>DCS </p>
+  </td>
+  <td width="12%" valign=top style='width:12.56%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>VP </p>
+  </td>
+  <td width="10%" valign=top style='width:10.84%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>UDL </p>
+  </td>
+  <td width="12%" valign=top style='width:12.26%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>UD </p>
+  </td>
+ </tr>
+</table>
+
+<p style='margin:0cm;margin-bottom:.0001pt'>Биты поля <span lang=EN-US
+style='mso-ansi-language:EN-US'>PDU</span>-<span lang=EN-US style='mso-ansi-language:
+EN-US'>type</span><span lang=EN-US> </span>представлены в таблице 2</p>
+
+<p style='margin:0cm;margin-bottom:.0001pt'>Таблица 2</p>
+
+<table class=MsoTableProfessional border=1 cellspacing=0 cellpadding=0
+ width="92%" style='width:92.4%;margin-left:5.4pt;border-collapse:collapse;
+ border:none;mso-border-alt:solid black .75pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+ mso-border-insideh:.75pt solid black;mso-border-insidev:.75pt solid black'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width="25%" valign=top style='width:25.7%;border:solid black 1.0pt;
+  mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>&nbsp;Обозначения</p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black .75pt;mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>RP </p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black .75pt;mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>UDHI </p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black .75pt;mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>SRR </p>
+  </td>
+  <td colspan=2 valign=top style='border:solid black 1.0pt;border-left:none;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>VPF </p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black .75pt;mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>RD </p>
+  </td>
+  <td width="16%" colspan=2 valign=top style='width:16.88%;border:solid black 1.0pt;
+  border-left:none;mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>MTI </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+  <td width="25%" valign=top style='width:25.7%;border:solid black 1.0pt;
+  border-top:none;mso-border-top-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>биты </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>7 </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>6 </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>5 </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>4 </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>3 </p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black .75pt;
+  mso-border-left-alt:solid black .75pt;mso-border-alt:solid black .75pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>2 </p>
+  </td>
+  <td width="8%" valign=top style='width:8.06%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  mso-border-top-alt:solid black .75pt;mso-border-left-alt:solid black .75pt;
+  mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>1 </p>
+  </td>
+  <td width="8%" valign=top style='width:8.82%;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  mso-border-top-alt:solid black .75pt;mso-border-left-alt:solid black .75pt;
+  mso-border-alt:solid black .75pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'>0 </p>
+  </td>
+ </tr>
+ <![if !supportMisalignedColumns]>
+ <tr height=0>
+  <td width=177 style='border:none'></td>
+  <td width=63 style='border:none'></td>
+  <td width=98 style='border:none'></td>
+  <td width=83 style='border:none'></td>
+  <td width=42 style='border:none'></td>
+  <td width=42 style='border:none'></td>
+  <td width=68 style='border:none'></td>
+  <td width=56 style='border:none'></td>
+  <td width=61 style='border:none'></td>
+ </tr>
+ <![endif]>
+</table>
+
+<p style='margin:0cm;margin-bottom:.0001pt'>Названия и назначение основных полей
+представлено в таблице 3.</p>
+
+<p style='margin:0cm;margin-bottom:.0001pt'>Таблица 3</p>
+
+<table class=MsoTableSimple2 border=1 cellspacing=0 cellpadding=0 width="95%"
+ style='width:95.24%;margin-left:5.4pt;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+ mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>SCA</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>номер SMSC </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>PDU-type </span></p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>поле данных протокола</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>MR</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>количество успешно переданных (0..255) сообщений с
+  телефона</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>DA</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>телефон получателя</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>PID</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>идентификатор протокола: указывает SMSC, как обрабатывать
+  сообщение</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>DCS</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>схема кодирования данных в поле данных</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>VP</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>время действия сообщения (если сообщение не будет получено
+  абонентом в течение этого времени, SMSC его не будет передавать)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>UDL</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>длина поля данных</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>UD</p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>поле данных (максимум 140байт)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>VPF</p>
+  <p class=MsoNormal><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Параметр
+  <span lang=EN-GB style='mso-ansi-language:EN-GB'>Validity</span><span
+  lang=EN-GB> </span><span lang=EN-GB style='mso-ansi-language:EN-GB'>Period</span></p>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'>Format</span>, определяющий формат
+  поля VP</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10;mso-yfti-lastrow:yes'>
+  <td width="19%" valign=top style='width:19.32%;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>MTI<o:p></o:p></span></p>
+  </td>
+  <td width="80%" valign=top style='width:80.68%;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'>Message</span><span lang=EN-GB> </span><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'>Type</span><span lang=EN-GB> </span><span
+  lang=EN-GB style='mso-ansi-language:EN-GB'>Indicator</span></p>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Биты<span
+  style='mso-spacerun:yes'>  </span>направления передачи</p>
+  </td>
+ </tr>
+</table>
+
+<p style='margin:0cm;margin-bottom:.0001pt'>Поле SCA имеет вид:</p>
+
+<table class=MsoTableSimple2 border=1 cellspacing=0 cellpadding=0 width="95%"
+ style='width:95.12%;margin-left:5.4pt;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+ mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width="29%" valign=top style='width:29.26%;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>Длина поля - 1 байт</p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>Тип номера - 1 байт</p>
+  </td>
+  <td width="39%" valign=top style='width:39.6%;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal>Номер от 0 до 6 байт</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt'>Длина содержит
+<span lang=EN-US style='mso-ansi-language:EN-US'>hex</span>-<span lang=EN-US
+style='mso-ansi-language:EN-US'>octet</span><span lang=EN-US> </span>(один
+байт), указывающий длину информации о SMSC.<span style='mso-spacerun:yes'> 
+</span>Тип номера может быть или 81<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span> - неизвестный, или 91<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span> - международный. Но лучше использовать 91<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> с нашими Украинскими операторами. </p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле номера</u> кодируется
+следующим образом: каждая пара цифр меняется местами. Если количество цифр
+нечетно, тогда в конец номера дописывается F<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span>. Если параметр длина поля = 0, тогда телефон должен взять номер
+SMS из своих настроек. Длина информации о SMSC определяется, как количество <span
+lang=EN-US style='mso-ansi-language:EN-US'>hex</span>-октетов + один байт типа
+номера.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt;mso-layout-grid-align:
+none;text-autospace:none'>Пример: номер +37212345678 последовательно
+превращается:</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>1. 37212345678 - убрали +; </p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>2. 37 21 23 45 67 <st1:metricconverter ProductID="8F"
+w:st="on">8<span lang=EN-US style='mso-ansi-language:EN-US'>F</span></st1:metricconverter><span
+lang=EN-US> </span>– разбили на октеты и добавили в конец символ F, так<span
+style='mso-spacerun:yes'>  </span>как длина нечетная. Посчитали количество
+октетов – 6<span lang=EN-US style='mso-ansi-language:EN-US'>d</span>,
+окончательно 6<span lang=EN-US style='mso-ansi-language:EN-US'>h</span>;</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>4. 73 12 32 54 76 F8 - переставили <span class=SpellE>тетрады</span>;</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>5. 91 73 12 32 54 76 F8 - добавили интернациональный тип
+номера 91<span lang=EN-US style='mso-ansi-language:EN-US'>h</span><span
+lang=EN-US> </span>и подсчитали количество октетов – 7<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>;</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>6. 07917312325476F8 - добавили длину - и получили
+результат.</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><b>Номер +37212345678 превратился в </b><b
+style='mso-bidi-font-weight:normal'>07917312325476F8.<o:p></o:p></b></p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле </u><u><span lang=EN-US
+style='mso-ansi-language:EN-US'>PDU</span>-</u><u><span lang=EN-US
+style='mso-ansi-language:EN-US'>type</span></u> (таблица 2). Здесь
+устанавливается тип сообщения. Зависит только от полей<span
+style='mso-spacerun:yes'>  </span><span lang=EN-US style='mso-ansi-language:
+EN-US'>VDF</span><span lang=EN-US> </span>и <span lang=EN-US style='mso-ansi-language:
+EN-US'>MTI</span>. Все остальные поля можно принять нулю. Для исходящего
+сообщения поле<span style='mso-spacerun:yes'>  </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>PDU</span>-<span lang=EN-US style='mso-ansi-language:
+EN-US'>type</span> устанавливаем в 01<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span>, для входящего – 00<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span>. Однако это при условии, что время жизни сообщения (<span
+lang=EN-US style='mso-ansi-language:EN-US'>VP</span>) не установлено. Если поле
+<span lang=EN-US style='mso-ansi-language:EN-US'>VP</span><span lang=EN-US> </span>использует
+относительный формат (его биты соответствуют 10<span lang=EN-US
+style='mso-ansi-language:EN-US'>b</span>),<span lang=UK style='mso-ansi-language:
+UK'> поле </span><span lang=EN-US style='mso-ansi-language:EN-US'>PDU</span>-<span
+lang=EN-US style='mso-ansi-language:EN-US'>type</span><span lang=EN-US> </span>устанавливается
+в 11<span lang=EN-US style='mso-ansi-language:EN-US'>h</span> для исходящего
+сообщения.</p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле </u><u><span lang=EN-US
+style='mso-ansi-language:EN-US'>MR</span></u>. При передаче устанавливается в
+00<span lang=EN-US style='mso-ansi-language:EN-US'>h</span> (устанавливается
+самим телефоном).</p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле </u><u><span lang=EN-US
+style='mso-ansi-language:EN-US'>DA</span></u><span lang=EN-US> </span>Длина
+номера определяется как количество символов самого номера без знака + и без
+символа F, дополняющего номер до четного значения.<span
+style='mso-spacerun:yes'>  </span>Например, номер +380679735581 преобразуется:</p>
+
+<p class=MsoNormal style='text-align:justify'>380679735581 (убрали +) -&gt;
+836097375518(переставили <span class=SpellE>тетрады</span>)
+-&gt;91836097375518(добавили интернациональный тип номера 91h) -&gt;0<span
+lang=EN-US style='mso-ansi-language:EN-US'>C</span>91836097375518(добавили
+длину – 12<span lang=EN-US style='mso-ansi-language:EN-US'>d</span><span
+lang=EN-US> </span>или 0<span lang=EN-US style='mso-ansi-language:EN-US'>Ch</span>)</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><u>Поле PID</u> (идентификатор протокола) предназначено
+для того, чтобы транспортный протокол мог обмениваться информацией с протоколом
+высшего уровня. PID описывает высокоуровневые протоколы или взаимодействующие
+устройства, от которых или для которых <span class=GramE>предназначена</span>
+SMS. SMSC (Центр Обслуживания Коротких Сообщений) сети может обеспечивать
+преобразования SMS в <span lang=EN-US style='mso-ansi-language:EN-US'>e</span>-<span
+lang=EN-US style='mso-ansi-language:EN-US'>mail</span>, сообщения оповещения,
+формат Телекса и т.д. и наоборот. Если значение этого поля равно 00h, то
+короткие сообщения не заменяются, а если значение этого поля лежит в пределах
+41h..47h, то происходит замена короткого сообщения на сообщение нового типа. </p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле DCS</u>. Фактически здесь
+используется только два варианта:</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>00<span lang=EN-US style='mso-ansi-language:EN-US'>h</span><span
+lang=EN-US> </span>– данные пользователя (<span lang=EN-US style='mso-ansi-language:
+EN-US'>UP</span>) кодируются 7-битовым алфавитом, при этом восемь символов
+запаковываются в семь байтов и сообщение может содержать до 160 символов.</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>08<span lang=EN-US style='mso-ansi-language:EN-US'>h</span>-
+кодировка UCS2, используется для передачи кириллицы. Один символ кодируется
+2-мя байтами. Можно передать только 70 символов в одном сообщении.</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'><u>Поле </u><u><span lang=EN-US style='mso-ansi-language:
+EN-US'>VP</span></u> проще говоря – это время, по истечении которого сообщение
+в памяти SMSC уничтожается, если SMSC не получил уведомление о доставке
+сообщения получателем.</p>
+
+<p class=MsoNormal style='text-align:justify;mso-layout-grid-align:none;
+text-autospace:none'>Формат VP определяется полем VPF (<span class=SpellE>Validity</span>
+<span class=SpellE>Period</span> <span class=SpellE>Format</span>).</p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Таблица
+4</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=84 valign=top style='width:50.4pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Значение</p>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>VPF<o:p></o:p></span></p>
+  </td>
+  <td width=375 valign=top style='width:225.0pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Формат
+  VP</p>
+  </td>
+  <td width=93 valign=top style='width:55.75pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>Длина
+  поля VP в байтах</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=84 valign=top style='width:50.4pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>00b<o:p></o:p></span></p>
+  </td>
+  <td width=375 valign=top style='width:225.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>поле
+  VP отсутствует<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=93 valign=top style='width:55.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>0<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=84 valign=top style='width:50.4pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>01b<o:p></o:p></span></p>
+  </td>
+  <td width=375 valign=top style='width:225.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>резерв
+  в <span lang=EN-US style='mso-ansi-language:EN-US'>Siemens</span>,
+  расширенный формат для <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+  EN-US'>SonyEric</span></span></p>
+  </td>
+  <td width=93 valign=top style='width:55.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>-<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=84 valign=top style='width:50.4pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>10b<o:p></o:p></span></p>
+  </td>
+  <td width=375 valign=top style='width:225.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>поле
+  VP использует относительный формат</p>
+  </td>
+  <td width=93 valign=top style='width:55.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>1<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+  <td width=84 valign=top style='width:50.4pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>11b<o:p></o:p></span></p>
+  </td>
+  <td width=375 valign=top style='width:225.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'>поле
+  VP использует абсолютный формат</p>
+  </td>
+  <td width=93 valign=top style='width:55.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+  lang=EN-US style='mso-ansi-language:EN-US'>7<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify'>Если задать относительный формат,
+то поле VP кодируется одним байтом. В частности, если десятичное значение VP = 168…196,
+то рассчитать VP можно следующим образом:</p>
+
+<p class=MsoNormal style='text-align:justify'>Время жизни сообщения = (<span
+lang=EN-US style='mso-ansi-language:EN-US'>VP</span>-166)*1_день.</p>
+
+<p class=MsoNormal style='text-align:justify'>Например, сообщение должно быть
+действительным 4 дня. Тогда согласно выражению <span lang=EN-US
+style='mso-ansi-language:EN-US'>VP</span>=170<span lang=EN-US style='mso-ansi-language:
+EN-US'>d</span><span lang=EN-US style='mso-ansi-language:UK'> </span>или <span
+lang=EN-US style='mso-ansi-language:EN-US'>VP</span>=<span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>AAh</span></span>.</p>
+
+<p class=MsoNormal style='text-align:justify'><u>Поле </u><u><span lang=EN-US
+style='mso-ansi-language:EN-US'>MTI</span>.</u> Для исходящего сообщения бит 0
+= 1, бит 1 = 0. Для входящего – бит 0 = 0, бит 1 = 0.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt'>Рассмотрим
+пример. Необходимо передать сообщение “Температура&gt;<st1:metricconverter
+ProductID="30”" w:st="on">30”</st1:metricconverter> через центр <span
+lang=EN-US style='mso-ansi-language:EN-US'>SMS</span><span lang=EN-US> </span>с
+номером +380672021111 на телефон абонента +380679735581. </p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:35.4pt'>Подключаем
+мобильный телефон, например <span lang=EN-US style='mso-ansi-language:EN-US'>Siemens</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>ME</span>45
+к компьютеру через последовательный порт (<span lang=EN-US style='mso-ansi-language:
+EN-US'>RS</span>232). На компьютере запускаем программу типа <span lang=EN-US
+style='mso-ansi-language:EN-US'>HyperTerminal</span><span lang=EN-US> </span>и
+вводим следующие команды:</p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>AT</span>+<span lang=EN-US style='mso-ansi-language:
+EN-US'>CMGF</span>=0<span style='mso-spacerun:yes'>                    
+</span>Установить телефон в <span lang=EN-US style='mso-ansi-language:EN-US'>PDU</span>
+режим.</p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>AT</span>+<span lang=EN-US style='mso-ansi-language:
+EN-US'>CMGS</span>= 42<span style='mso-spacerun:yes'>                 </span>Послать
+сообщение длиной 42 октета (не считать количество октетов центра <span
+lang=EN-US style='mso-ansi-language:EN-US'>SMS</span>). Расчет начинаем с
+октета <span lang=EN-US style='mso-ansi-language:EN-US'>PDU</span>-<span
+lang=EN-US style='mso-ansi-language:EN-US'>type</span>. После этой команды
+появится символ &gt; </p>
+
+<p class=MsoNormal style='text-align:justify'>079183602720111111000<span
+lang=EN-US style='mso-ansi-language:EN-US'>C</span>918360973755180008<span
+lang=EN-US style='mso-ansi-language:EN-US'>AA</span>1<span lang=EN-US
+style='mso-ansi-language:EN-US'>C</span>04220435043<span lang=EN-US
+style='mso-ansi-language:EN-US'>C</span>043<span lang=EN-US style='mso-ansi-language:
+EN-US'>F</span>0435044004300442044304400430003<span lang=EN-US
+style='mso-ansi-language:EN-US'>E</span>00330030 (в конце необходимо послать
+символ <span lang=EN-US style='mso-ansi-language:EN-US'>Ctrl</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>z</span>)</p>
+
+<p class=MsoNormal style='text-align:justify'>В случае удачной операции телефон
+выдаст примерно следующее сообщение:</p>
+
+<p class=MsoNormal style='text-align:justify'>+CMGS: 185</p>
+
+<p class=MsoNormal style='text-align:justify'>OK</p>
+
+<p class=MsoNormal style='text-align:justify'>Рассмотрим <span lang=EN-US
+style='mso-ansi-language:EN-US'>PDU</span><span lang=EN-US> </span>сообщение,
+переданное телефону:</p>
+
+<p class=MsoNormal style='text-align:justify'>07<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> - длина информации о SMSC (шесть
+октетов номера <span lang=EN-US style='mso-ansi-language:EN-US'>SMS</span><span
+lang=EN-US> </span>центра плюс один октет типа номера;</p>
+
+<p class=MsoNormal style='text-align:justify'>91<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> –<span style='mso-ansi-language:UK'> </span>Тип
+номера SMSC – интернациональный;</p>
+
+<p class=MsoNormal style='text-align:justify'>83 60 27 20 11 <span
+class=SpellE>11</span> – номер SMSC в десятичных полу - октетах
+(преобразованный с номера +380672021111);</p>
+
+<p class=MsoNormal style='text-align:justify'>11<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> – поле <span lang=EN-US
+style='mso-ansi-language:EN-US'>PDU</span>-<span lang=EN-US style='mso-ansi-language:
+EN-US'>type</span>, тип сообщения исходящее с установленным временем действия
+сообщения (<span lang=EN-US style='mso-ansi-language:EN-US'>VP</span>);</p>
+
+<p class=MsoNormal style='text-align:justify'>00<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span><span style='mso-spacerun:yes'> 
+</span>- Поле <span lang=EN-US style='mso-ansi-language:EN-US'>MR</span>. При
+передаче устанавливается в 00<span lang=EN-US style='mso-ansi-language:EN-US'>h</span>;</p>
+
+<p class=MsoNormal style='text-align:justify'>0<span lang=EN-US
+style='mso-ansi-language:EN-US'>Ch</span> – Длина номера получателя;</p>
+
+<p class=MsoNormal style='text-align:justify'>91<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> –<span style='mso-ansi-language:UK'> </span>Тип
+номера получателя – интернациональный;</p>
+
+<p class=MsoNormal style='text-align:justify'>836097375518 - номер получателя в
+десятичных полу - октетах (преобразованный с номера +380679735581);</p>
+
+<p class=MsoNormal style='text-align:justify'>00<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> - Поле PID (идентификатор протокола).
+Принимается равным 00<span lang=EN-US style='mso-ansi-language:EN-US'>H</span>.</p>
+
+<p class=MsoNormal style='text-align:justify'>08<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span> – Поле DCS. Представление данных в
+коде UCS2, так как передается кириллица;</p>
+
+<p class=MsoNormal style='text-align:justify'><span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>AAh</span></span> - Поле <span
+lang=EN-US style='mso-ansi-language:EN-US'>VP</span>. Время<span
+style='mso-ansi-language:UK'> </span>действия<span style='mso-ansi-language:
+UK'> </span>сообщения<span lang=UK style='mso-ansi-language:UK'> 4 дня;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'>1<span lang=EN-US
+style='mso-ansi-language:EN-US'>Ch</span> – Поле <span lang=EN-US
+style='mso-ansi-language:EN-US'>UDL</span>. Длина передаваемого сообщения в
+байтах (количество символов ‘Температура&gt;<st1:metricconverter ProductID="30’"
+w:st="on">30’</st1:metricconverter> необходимо умножить на 2, т.к. каждый
+символ представлен двумя байтами).</p>
+
+<p class=MsoNormal style='text-align:justify'>04220435043<span lang=EN-US
+style='mso-ansi-language:EN-US'>C</span>043<span lang=EN-US style='mso-ansi-language:
+EN-US'>F</span>0435044004300442044304400430003<span lang=EN-US
+style='mso-ansi-language:EN-US'>E</span>00330030 – Поле <span lang=EN-US
+style='mso-ansi-language:EN-US'>UD</span> – поле данных, которое представляет
+собой само сообщение, полученное пользователем.</p>
+
+<p class=MsoNormal style='text-align:justify'>Здесь 0422-Т; 0435-е; 043<span
+lang=EN-US style='mso-ansi-language:EN-US'>C</span>-м; 043<span lang=EN-US
+style='mso-ansi-language:EN-US'>F</span>-<span class=SpellE>п</span>; 0435-е;
+0440-р; 0430-а; 0442-т; 0443-у; 0440-р; 0430-а; 003<span lang=EN-US
+style='mso-ansi-language:EN-US'>E</span>- &gt;; 0033-3; 0030- 0.</p>
+
+<p class=MsoNormal style='text-align:justify'><span style='mso-tab-count:1'>            </span>Если
+использовать номер телефона SMSC, записанный на <span lang=EN-US
+style='mso-ansi-language:EN-US'>SIM</span><span lang=EN-US> </span>карте, то
+достаточно ввести следующие команды:</p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>AT+CMGF=0 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>AT+CMGS= 42<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>&gt;0011000C918360973755180008AA1C04220435043C043F0435044004300442044304400430003E00330030
+(Ctrl/z)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'>Здесь первый октет 00 - номер
+телефона SMS-центра, через который отправляется SMS, который читается с <span
+lang=EN-US style='mso-ansi-language:EN-US'>SIM</span> карты. Все остальное
+аналогично предыдущему.</p>
+
+</div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter23185756 = new Ya.Metrika({id:23185756,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/23185756" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+
+</html>
