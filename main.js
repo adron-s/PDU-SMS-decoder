@@ -410,6 +410,17 @@ class PduSMS {
 		return res.join('');
 	}
 	//*************************************************************************
+	/* возвращает кол-во байт в буфере за вычетом байтов для SCA */
+	get_smgs_len(buf){
+		let res = Math.floor(buf.length / 2);
+		if(res == 0)
+			return 0;
+		let sca_len = parseInt(buf.substr(0, 2), 16) + 1; //+1 так как с учетом байта длины
+		if(sca_len < res)
+			return res - sca_len;
+		return 0;
+	}
+	//*************************************************************************
 	/* возвращает строку с PDU данными. например для console.log() */
 	toString(){
 		let keys = [ "SCA\n", "PDU_type\n", "DA\n", "VP\n", "PID", "DCS", "MTI", "VPF", "UDHI", "UDL" ];
@@ -448,8 +459,11 @@ pdu.DA = "+37066426731";
 pdu.PID = 0;
 pdu.DCS = 0;
 pdu.VP = null;
-pdu.UD = "Hello world!";
+pdu.UD = "Пошел я отдыхать :-)";
+//pdu.UD = "Hello world! It's work!";
+//pdu.UD = "It is easy to send text messages.";
 let buf = pdu.encode();
+console.log("AT+CMGS=" + pdu.get_smgs_len(buf));
 
 /* decode tests */
 let buf1 = '07917360489991F94409D0D432BB2C030008021061413024805C05' + '0003C60303' + '00730033002F006100380038003200370032003900330064003400650039003F00730067007500690064003D00310032003000370032003200300039005F0031003500370037003600360034003000300030000D000A';
@@ -457,12 +471,13 @@ let buf2 = '07917360489991F9040B917360466237F100080250010160902122' + '041F04400
 let buf3 = '07917360489991F9040B917360466237F10000025011816341210A' + 'D4F29C1E8BC964B319';
 let buf4 = '07917360489991F9040B917360466237F100000250118104332151' + '54747A0E4ACF416190BD2CCF83D86FF719D42ECFE7E173197447A7C768D01CFDAEB3C9A039FA7D07D1D1613A888E2E836E20719A0E12A7E9A0FB5BBE9E83C66FB9BC3CA6B3F321';
 let buf5 = '07917360489991F9040B917360466237F100000250312112552107' + '61F1985C369F01';
+let buf6 = '07915892000000F001000B915892214365F7000021' + '493A283D0795C3F33C88FE06CDCB6E32885EC6D341EDF27C1E3E97E72E';
 //0B 91 7360466237F
 let bufs = [ buf ] //buf1, buf2, buf3, buf4 ];
 //bufs = require('fs').readFileSync("./data.txt").toString().split("\n");
 bufs.forEach((buf, i) => {
 	//console.log(i);
-	console.log(buf);
+	console.log(buf, buf.length);
 	if(pdu.decode(buf) === false)
 		return;
 	console.log(pdu.toString());
