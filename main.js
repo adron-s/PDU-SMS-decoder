@@ -31,21 +31,48 @@ class PduSMS {
 		  110: 'n', 111: 'o', 112: 'p', 113: 'q', 114: 'r', 115: 's', 116: 't', 117: 'u', 118: 'v', 119: 'w',
 		  120: 'x', 121: 'y', 122: 'z', 123: 'ä', 124: 'ö', 125: 'ñ', 126: 'ü', 127: 'à'
 		};
+		this.gsm7_values = Object.values(this.gsm7_charsets);
+		this.gsm7_keys = Object.keys(this.gsm7_charsets);
+		this.encode_sca = res => this.encode_sca_da(res, 'SCA');
+		this.encode_da = res => this.encode_sca_da(res, 'DA');
+		this.decode_sca = res => this.decode_sca_da(res, 'SCA');
+		this.decode_da = res => this.decode_sca_da(res, 'DA');
 		if(buf)
 			this.decode(buf);
 	}
 	//*************************************************************************
-	/* возвращает символ по его коду. если код не известен то возвращает '?' */
+	/* преобразует байт в строковое 16-ти ричное представление */
+	b2s(num){
+		num &= 0xFF;
+		return ('00' + num.toString(16).toUpperCase()).slice(-2);
+	}
+	//*************************************************************************
+	/* преобразует двух байтовое значение в строковое 16-ти ричное представление */
+	w2s(num){
+		num &= 0xFFFF;
+		return ('0000' + num.toString(16).toUpperCase()).slice(-4);
+	}
+	//*************************************************************************
+	/* возвращает kod для символа. если код не известен то возвращает null */
+	gsm7_gk(chr){
+		let idx = this.gsm7_values.indexOf(chr);
+		if(idx >= 0)
+			return this.gsm7_keys[idx];
+		else
+			return null; //неизвестный символ
+	}
+	//*************************************************************************
+	/* возвращает символ(char) по его коду. если код не известен то возвращает '?' */
 	gsm7_gc(code){
 		let gsm7_charsets = this.gsm7_charsets;
 		if(gsm7_charsets.hasOwnProperty(code))
 			return gsm7_charsets[code];
 		else
-			return '?'; //неизвестный символ
+			return '?'; //неизвестный код
 	}
 	//*************************************************************************
 	/* декодер gsm7 Uint8Array массива в строку */
-	gsm7_to_str(buf){
+	gsm7_to_str(buf, len){
 		let res = "";
 		let um = 0, ur = 0;
 		for(let a = 0; a < buf.length; a++){
@@ -58,25 +85,101 @@ class PduSMS {
 				um = 0; ur = 0;
 			}
 		}
+		if(res.length > len)
+			res = res.substr(0, len);
 		return res;
+	}
+
+	//*************************************************************************
+	/* кодер строки в gsm7 */
+	str_to_gsm7(str, raw_res){
+		let len = str.length;
+		let res = [ ];
+		let buf = str.split('');
+		//переводим в массив char кодов
+		buf = buf.map((c, i) => {
+			let k = this.gsm7_gk(c);
+			if(k === null){
+				console.warn(i, ": Incorrect char '" + c + "' for gsm7 code page!");
+				k = this.gsm7_gk('?');
+			}
+			return k;
+		});
+		//добавим последний 0-й байт чтобы не вылетать за границы массива в buf[a + 1]
+		buf.push(0);
+		//начинаем 7-битное кодирование
+		buf = new Uint8Array(buf);
+		//console.log(buf2hex8(buf));
+		let i = 0, x1 = 7;
+		for(let a = 0; a < buf.length - 1; a++){
+			let x2 = 8 - x1;
+			let b1 = (1 << x1) - 1;
+			let b2 = (1 << x2) - 1;
+			let d1 = buf[a] & b1;
+			let d2 = buf[a + 1] & b2; //для последнего байта тут будет 0
+			res[i++] = d1 | (d2 << x1);
+			//console.log(x1, x2, buf2hex8([b1, b2, res[i - 1]]), buf[a], buf[a + 1]);
+			//если мы прошли 7 проходов
+			if(!--x1){
+				/* пропуск обработки следующего байта. он не нужен т.к. мы все его
+					 7 бит уже и так полностью обработали в этом проходе. */
+				a++;
+				x1 = 7;
+			}else{
+				buf[a + 1] = buf[a + 1] >> x2;
+			}
+		}
+		//console.log(res);
+		if(raw_res === true)
+			return res; //результат в виде массива
+		res = res.map(d => this.b2s(d));
+		res = res.join(''); //результат в виде 16-ти ричной байтовой строки				
+		return [ len, res ]; //длина в символах!
 	}
 	//*************************************************************************
 	/* декодер ucs2 Uint8Array массива в строку */
-	ucs2_to_str(buf){
+	ucs2_to_str(buf, len){
 		let buf16 = [ ];
 		for(let a = 0; a < buf.length; a++){
 			if(a & 0x1)
 				buf16.push((buf[a - 1] << 8) | buf[a]);
 		}
-		buf16 = new Uint16Array(buf16);		
-		return String.fromCharCode.apply(null, buf16);
+		buf16 = new Uint16Array(buf16);
+		let res = String.fromCharCode.apply(null, buf16);
+		if(res.length > len)
+			res = res.substr(0, len);
+		return res;
+	}
+	//*************************************************************************
+	/* кодер строки в ucs2 */
+	str_to_ucs2(str){
+		let buf = str.split('');
+		buf = buf.map(c => this.w2s(c.charCodeAt(0)));
+		let res = buf.join('');
+		let len = (res.length / 2); //длина в байтах
+		return [ len, res ];
+	}
+	//*************************************************************************
+	/* определяет какая кодировка(DCS) используется в str. фактически тут
+		 или gsm7 или ucs2. */
+	detect_dcs(str){
+		let res = 0; //gsm7
+		let buf = str.split('');
+		let gsm7_values = this.gsm7_values;
+		for(let a = 0; a < buf.length; a++){
+			let c = buf[a];
+			if(gsm7_values.indexOf(c) < 0)
+				return 8; //ucs2
+		}
+		return res;
 	}
 	//*************************************************************************
 	/* переворачивалка символов в двух символьной строке.
 		 так же дополняет нулем если число < 10 */
-	number_reverse(num){
-		return num.map(o => ('00' + o.toString(16).toUpperCase()).
-			slice(-2).split('').reverse().join(''));
+	number_reverse(buf){
+		if(typeof(buf[0]) == "string") //элементы num уже в строковом формате
+			return buf.map(o => o.split('').reverse().join(''));
+		return buf.map(o => this.b2s(o).split('').reverse().join(''));
 	}
 	//*************************************************************************
 	/* обрезает символ 'F' в последнем октете массива: строке "xF"
@@ -87,32 +190,25 @@ class PduSMS {
 		return num;
 	}
 	//*************************************************************************
-	/* парсит блок SCA - Номер телефона Центра SMS (может не указываться) */
-	parse_sca(buf){
-		let len = buf[0];
-		//длина может быть 0-й(пустое поле sca)
-		if(len < 1  || buf.length < len)
-			return [ 1, '' ];
-		let type = buf[1]; //81h - неизвестный, или 91h - международный
-		let num = Array.from(buf.slice(2, len + 1));
-		num = this.cut_lastF(this.number_reverse(num)).join('');
-		//console.log(len, type.toString(16), num);
-		if(type == 0x91)
-			num = '+' + num;
-		return [ len + 1, num ];
-	}
-	//*************************************************************************
-	/* парсит блок DA - номер телефона отправителя/получателя.
-		 у него ~немного другой формат~ относительно SCA! */
-	parse_phone(buf){
+	/* декодирует блок SCA - телефон Центра SMS или DA - телефон получателя */
+	decode_sca_da(buf, what){
 		let len = buf[0];
 		let type = buf[1]; //81h - неизвестный, или 91h - международный
 		/* про ToN и NPI смотри в jspdudecoder.js */
 		let ToN = type & 0x70; //Type of number Bits
+		if(len == 0){
+			return [1, null]; //SCA отсутствует
+		}
 		//let NPI = type & 0xF;	// Numbering Plan Identification
 		//console.log("ToN: 0x" +ToN.toString(16) + ',', " NPI: 0x" + NPI.toString(16));
-		//длина указывает на !кол-во цифер! в номере. переводим в кол-во байт.
-		len = Math.round((len + 1) / 2);
+		/* вот все отличие SCA формата от DA */
+		if(what == 'SCA'){
+			// длина указывала кол-во байт занятых под номер + 1(байт длины)
+			len -= 1;
+		}else{ /* DA */
+			//длина указывает на !кол-во цифер! в номере. переводим в кол-во байт занятых под номер.
+			len = Math.round((len + 1) / 2);
+		}
 		if(buf.length < len + 2)
 			return [ 2, '' ];
 		let num = buf.slice(2, len + 2);
@@ -127,6 +223,47 @@ class PduSMS {
 				num = '+' + num;
 		}
 		return [ len + 2, num ];
+	}
+	//*************************************************************************
+	/* кодирует блок SCA или DA */
+	encode_sca_da(res, what){
+		let buf = [ 0, 0 ]
+		let v = this[what];		
+		if(!v){ /* SCA/DA отсутствует */
+			res.push('00');
+			return 1;
+		}
+		buf[1] = '81'; //неизвестный
+		let mr = v.match(/^\+(\d+)$/);
+		if(mr){
+			buf[1] = '91'; //международный
+			v = mr[1];
+		}
+		let v_len = v.length; //ко-во цифер в номере
+		if(v.length & 0x1)
+			v += "F";
+		v = v.match(/\w{2}/g);
+		if(!v){
+			console.warn("Can't parse " + what + " phone string!");
+			return 0;
+		}		
+		v = this.number_reverse(v);		
+		if(what == "SCA")
+			buf[0] = this.b2s(v.length + 1); //+1 т.к. учитывается и res[1]
+		else /* DA */
+			buf[0] = this.b2s(v_len); //!кол-во цифер! в номере
+		buf.push(...v);
+		res.push(...buf);
+		return buf.length;
+	}
+	//*************************************************************************
+	/* выполняет кодирование UD строки в байтовый формат */
+	encode_ud(ud, dcs){
+		if(!ud)
+			return "";
+		if(dcs == 0)
+			return this.str_to_gsm7(ud);
+		return this.str_to_ucs2(ud);
 	}
 	//*************************************************************************
 	/* декодер блока VP - дата и время приема/отправки сообщения. для исходящих сообщений ее проще вообще не указывать
@@ -163,7 +300,7 @@ class PduSMS {
 				buf = buf.match(/(\w{2})/g).map(c => parseInt(c, 16));
 				buf = new Uint8Array(buf);
 			}else{
-				console.warn("Unknown type of buf");
+				console.warn("Unknown type of raw buf data");
 				return undefined;
 			}
 		}
@@ -173,24 +310,35 @@ class PduSMS {
 	/* выполняет декодирование PDU header-а */
 	decode_header(buf){
 		let len;
-		[ len, this.SCA ] = this.parse_sca(buf, 0); //Номер телефона Центра SMS (может не указываться)
+		//console.dir(buf2hex8(buf), { maxArrayLength: 12 });
+		[ len, this.SCA ] = this.decode_sca(buf); //Номер телефона Центра SMS (может не указываться)
 		buf = buf.slice(len); //пропустим байты SCA
 		let pdu_type = this.PDU_type = buf[0]; //Тип PDU пакета
 		buf = buf.slice(1); //пропустим 1 байт
 		//извлечем некоторые битовые переменные из PDU-type
+		this.MTI = pdu_type & 0x3; //Message Type Indicator. 00 - принимаемое сообщение, 01 - отправляемое сообщение, 10 — отчет о доставке
 		this.VPF = (pdu_type >> 3) & 0x3; //Параметр Validity Period Format, определяющий формат поля VP но только для TX SMS
 		this.UDHI = (pdu_type >> 6) & 0x1; //User Data Header Included. 1 - поле UD содержит сообщение и дополнительный заголовок.
-		/* MR в входящих сообщениях отсутсвует. он используется только в исходящих. */
-		[ len, this.DA ] = this.parse_phone(buf); //DA — Destination Address - Номер телефона получателя сообщения
-		buf = buf.slice(len); //пропустим байты DA
+		/* MR во входящих сообщениях отсутсвует. он используется только в исходящих. */
+		this.MR = 0;
+		if(this.MTI == 0x01){ //если это отправляемое сообщение
+			this.MR = buf[0];
+			buf = buf.slice(1); //пропустим 1 байт
+		}
+		[ len, this.DA ] = this.decode_da(buf); //DA — Destination Address - Номер телефона получателя сообщения
+		buf = buf.slice(len); //пропустим байты DA		
 		this.PID = buf[0]; //идентификатор протокола: указывает SMSC, как обрабатывать сообщение
 		this.DCS = buf[1]; //схема кодирования данных в поле данных.
 		//https://en.wikipedia.org/wiki/Data_Coding_Scheme
 		buf = buf.slice(2); //пропустим 2 байта
 		//console.dir(buf2hex8(buf), { maxArrayLength: 7 });
-		[len, this.VP ] = this.vp_decode(buf);
-		buf = buf.slice(len); //пропустим байты DA
-		//console.dir(but2hex8(buf), { maxArrayLength: 1 });
+		if(this.VPF == 0x3 || this.MTI == 0x00){
+			[len, this.VP ] = this.vp_decode(buf);
+			buf = buf.slice(len); //пропустим байты VP
+		}else{
+			this.VP = null;
+		}
+		//console.dir(buft2hex8(buf), { maxArrayLength: 1 });
 		this.UDL = buf[0];
 		buf = buf.slice(1);
 		//все. остались только полезные данные.
@@ -205,34 +353,66 @@ class PduSMS {
 		if(!buf)
 			return false;
 		buf = this.decode_header(buf);
-		//console.dir(but2hex8(buf), { maxArrayLength: 20 });
-		let len;
+		let len = this.UDL;
 		if(this.UDHI){ //если есть заголовок
 			/* он может присутствовать чтобы указать на тип контента в UD.
 				 например я его встречал в содержащих url сообщениях. */
-			len = buf[0]; //длина user заголовка
-			buf = buf.slice(len + 1);
+			len = buf[0] + 1; //длина user заголовка
+			buf = buf.slice(len);
 			//содержимое заголовка мы просто игнорируем
+			len = this.UDL - len;
 		}
+		//console.dir(buf2hex8(buf), { maxArrayLength: 20 });		
 		/* схема кодирования данных в поле данных. Фактически здесь используется только два варианта:
 			 00h – данные пользователя (UP) кодируются 7-битовым алфавитом, при этом восемь символов
 				запаковываются в семь байтов и сообщение может содержать до 160 символов.
 			 08h - кодировка UCS2, используется для передачи кириллицы.
 				Один символ кодируется 2-мя байтами. Можно передать только 70 символов в одном сообщении. */
 		if(this.DCS == 0) //кодировка gsm7
-			this.UD = this.gsm7_to_str(buf);
+			this.UD = this.gsm7_to_str(buf, len);
 		else if(this.DCS == 8) //кодировка UCS2
-			this.UD = this.ucs2_to_str(buf);
+			this.UD = this.ucs2_to_str(buf, Math.floor(len / 2));
 		else
-			console.warn("Unknown encoding:", this.DCS);		
+			console.warn("Unknown encoding:", this.DCS);
 		if(this.UD)
 			return true;
 		return false;
 	}
 	//*************************************************************************
+	/* выполняет кодирование значений внутренних переменных в PDU строку */
+	encode(){
+		let res = [ ];
+		let i = 0;
+		//SCA
+		this.encode_sca(res);
+		i = res.length;
+		//PDU-type
+		res[i++] = this.b2s(this.PDU_type);
+		//MR - порядковый номер сообщения, определяется самим модемом
+		res[i++] = '00';
+		//DA - номер получателя
+		i += this.encode_da(res);
+		//PID
+		if(!this.PID)
+			this.PID = 0;
+		res[i++] = this.b2s(this.PID);
+		//DCS - кодировка сообщения
+		this.DCS = this.detect_dcs(this.UD);
+		res[i++] = this.b2s(this.DCS);
+		//VP - 0 байт(пустое поле)
+		if(this.VP)
+			console.warn("VP is not supported!");
+		//UD
+		let [ len, ud ] = this.encode_ud(this.UD, this.DCS);		
+		//UDL - длина полезных данных
+		res[i++] = this.b2s(len);
+		res.push(...ud);
+		return res.join('');
+	}
+	//*************************************************************************
 	/* возвращает строку с PDU данными. например для console.log() */
 	toString(){
-		let keys = [ "SCA\n", "PDU_type\n", "DA\n", "VP\n", "PID", "DCS", "VPF", "UDHI", "UDL" ];
+		let keys = [ "SCA\n", "PDU_type\n", "DA\n", "VP\n", "PID", "DCS", "MTI", "VPF", "UDHI", "UDL" ];
 		let res = "";
 		keys.forEach((p, i) => {
 			let nl = false;
@@ -240,6 +420,8 @@ class PduSMS {
 				p = p.replace(/\n$/, '');
 				nl = true;
 			}
+			if(this[p] == undefined || this[p] == null)
+				return;
 			res += p + ': ' + this[p];
 			if(nl)
 				res += "\n";
@@ -254,20 +436,35 @@ class PduSMS {
 };
 
 let pdu = new PduSMS();
+
+/* encode tests */
+pdu.SCA = null; //'+37068499199';
+/* Для упрощения условимся не использовать поле VP (время жизни SMS).
+	 и установим биты VPF в нулевое значение. Также в нулевое значение установим биты RP.
+	 Биты MTI отправляемого сообщения необходимо установить в значение 01.
+	 Таким образом значение байта поля PDU type принимаем равным 01h. */
+pdu.PDU_type = 1;
+pdu.DA = "+37066426731";
+pdu.PID = 0;
+pdu.DCS = 0;
+pdu.VP = null;
+pdu.UD = "Hello world!";
+let buf = pdu.encode();
+
 /* decode tests */
-let buf1 = '07917360489991F94409D0D432BB2C030008021061413024805C050003C60303' + '00730033002F006100380038003200370032003900330064003400650039003F00730067007500690064003D00310032003000370032003200300039005F0031003500370037003600360034003000300030000D000A';
+let buf1 = '07917360489991F94409D0D432BB2C030008021061413024805C05' + '0003C60303' + '00730033002F006100380038003200370032003900330064003400650039003F00730067007500690064003D00310032003000370032003200300039005F0031003500370037003600360034003000300030000D000A';
 let buf2 = '07917360489991F9040B917360466237F100080250010160902122' + '041F04400438043204350442002E0020041A0430043A002004340435043B0430002E';
-let buf3 = '07917360489991F9040B917360466237F10000025011816341210AD4F29C1E8BC964B319';
-let buf4 = '07917360489991F9040B917360466237F10000025011810433215154747A0E4ACF416190BD2CCF83D86FF719D42ECFE7E173197447A7C768D01CFDAEB3C9A039FA7D07D1D1613A888E2E836E20719A0E12A7E9A0FB5BBE9E83C66FB9BC3CA6B3F321';
-let bufs = [ buf3 ] //, buf2, buf3, buf4 ];
+let buf3 = '07917360489991F9040B917360466237F10000025011816341210A' + 'D4F29C1E8BC964B319';
+let buf4 = '07917360489991F9040B917360466237F100000250118104332151' + '54747A0E4ACF416190BD2CCF83D86FF719D42ECFE7E173197447A7C768D01CFDAEB3C9A039FA7D07D1D1613A888E2E836E20719A0E12A7E9A0FB5BBE9E83C66FB9BC3CA6B3F321';
+let buf5 = '07917360489991F9040B917360466237F100000250312112552107' + '61F1985C369F01';
+//0B 91 7360466237F
+let bufs = [ buf ] //buf1, buf2, buf3, buf4 ];
 //bufs = require('fs').readFileSync("./data.txt").toString().split("\n");
 bufs.forEach((buf, i) => {
 	//console.log(i);
+	console.log(buf);
 	if(pdu.decode(buf) === false)
 		return;
 	console.log(pdu.toString());
 	console.log("");
 });
-
-/* encode tests */
-pdu.SCA = null;
