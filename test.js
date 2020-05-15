@@ -5,7 +5,8 @@ import PduSMS from './pdu-sms.js';
 let pdu = new PduSMS();
 
 /* encode tests */
-let message = "Hello world! It's work!";
+//let message = "Hello world! It's work!";
+let message = "Привет. Сегодня 15 мая. Тест 123.";
 let buf = pdu.encode({
 	phone: "+37066426731",
 	message: message
