@@ -1,0 +1,12 @@
+{
+  "name": "pdu-sms",
+  "version": "1.0.0",
+  "description": "PDU SMS format decoder/encoder",
+  "main": "test.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodejs --experimental-modules --no-warnings ."
+  },
+  "author": "adron@mstnt.com",
+  "license": "GPL-3.0"
+}
