@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "PDU SMS format decoder/encoder",
   "main": "test.js",
-  "type": "module",
   "scripts": {
     "start": "nodejs --experimental-modules --no-warnings ."
   },
