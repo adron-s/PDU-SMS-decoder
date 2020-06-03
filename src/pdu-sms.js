@@ -1,6 +1,6 @@
 "use strict";
 
-/* декодер PDU формата SMS-ок получаемых AT командами с модема.		
+/* декодер PDU формата SMS-ок получаемых AT командами с модема.
 	 так же умеет кодировать обрабно в PDU формат.
 	 смотри ./docs/	и https://github.com/tladesignz/jsPduDecoder
 */
@@ -217,7 +217,7 @@ class PduSMS {
 			//длина указывает на !кол-во цифер! в номере. переводим в кол-во байт занятых под номер.
 			len = Math.round((len + 1) / 2);
 		}
-		//на данном этапе len это кол-во байт полезных данных номера		
+		//на данном этапе len это кол-во байт полезных данных номера
 		if(buf.length < len + 2) //+2 так как есть еще байты длины и типа
 			return [ 2, '' ];
 		let num = buf.slice(2, len + 2);
@@ -369,6 +369,7 @@ class PduSMS {
 			/* он может присутствовать чтобы указать на тип контента в UD(SMS body).
 				 например я его встречал в содержащих url сообщениях. */
 			len = buf[0] + 1; //длина user заголовка
+			this.UDH = buf.slice(0, len);
 			buf = buf.slice(len);
 			//содержимое заголовка мы просто игнорируем
 			len = this.UDL - len;
@@ -473,10 +474,118 @@ class PduSMS {
 				res += ", ";
 		});
 		res = res.replace(/, (\n|$)/g, '\n');
+		if(this.UDH)
+			res += "UDH: [ " + buf2hex8(this.UDH).join(" ") + " ]\n";
 		res += this.UD;
 		res = res.replace(/\n$/, '');
 		return res;
 	}
 };
+
+/************************* PDU SMS concatination **************************/
+//*************************************************************************
+/* вспомогательная ф-я: выполняет конкатенацию UD строк полученных ранее
+	 ~кусочков~(pdu объектов) одного и того же SMS сообщения в общую UD строку */
+function join_concatenated_sms_parts(all_parts){
+	//кусочки могут приходить не по порядку так что сортируем их номера
+	let all_keys = Object.keys(all_parts);
+	all_keys = all_keys.map(v => Number(v)).sort((a, b) => a - b);
+	if(all_keys.length == 0)
+		return false;
+	let res_UD = "";
+	all_keys.forEach(k => res_UD += all_parts[k].UD);
+	return res_UD;
+}
+//*************************************************************************
+/* декодирует поля UDH заголовка для concatenated SMS.
+	 подробнее смотри: https://en.wikipedia.org/wiki/Concatenated_SMS */
+function decode_parted_UDH(UDH){
+	if(!UDH)
+		return false;
+	//случай для 8 bit CSMS
+	if(UDH[0] == 5 && UDH[1] == 0 && UDH[2] == 3 && UDH.length == 6){
+		return {
+			ref_num: UDH[3],
+			total_num_of_parts: UDH[4],
+			this_part_num: UDH[5]
+		}
+	}
+	//случай для 16 bit CSMS
+	if(UDH[0] == 6 && UDH[1] == 8 && UDH[2] == 4 && UDH.length == 7){
+		return {
+			ref_num: (UDH[3] << 8) || UDH[4],
+			total_num_of_parts: UDH[5],
+			this_part_num: UDH[6]
+		}
+	}
+	return false;
+}
+//*************************************************************************
+/* проверяет две SMS(pdu объекты) на принадлежность
+	 к одной и той же concated SMS */
+function check_for_sms_concated_signs(pdu1, pdu2){
+	if(!pdu1 || !pdu2)
+		return false;		
+	if(pdu1.DA != pdu2.DA)
+		return false; //номера отправителей разные 
+	if(pdu1.VP != pdu2.VP){
+		let t1 = new Date(pdu1.VP);
+		let t2 = new Date(pdu2.VP);
+		//если разница во времени прихода этих двух SMS > 60 сек
+		if(Math.abs(t2 - t1) > 60000)
+			return false;
+	}
+	return true;
+}
+//*************************************************************************
+/* выполняет поиск среди массива ~кусочков-объектов~ { pdu: PduSMS }
+	 одного и тогоже SMS послания. все кусочки в итоге склеиваются в одну
+	 UD строку и она назначается pdu объекту самого младшего(как правило
+	 с part_num == 1) кусочка. остальные объекты кусочков помечаются
+	 на пропуск путем установки поля pdu := null */
+function do_sms_concatenate(objs_list){
+	let res = [ ];
+	for(let a = 0; a < objs_list.length; a++){
+		let obj = objs_list[a];
+		let pdu1 = obj.pdu;
+		if(!pdu1)
+			continue;
+		//console.log(pdu.UDH);
+		let UDH1 = decode_parted_UDH(pdu1.UDH);
+		//если это SMS сообщение это часть большого послания разбитого на куски
+		if(UDH1){
+			let all_parts = { };
+			//самый первый кусочек найден
+			all_parts[UDH1.this_part_num] = pdu1;
+			//ищем остальные куски этого послания
+			for(let b = a + 1; b < objs_list.length; b++){
+				let obj2 = objs_list[b];
+				let pdu2 = obj2.pdu;					
+				if(!check_for_sms_concated_signs(pdu1, pdu2))
+					continue;
+				let UDH2 = decode_parted_UDH(pdu2.UDH);
+				if(UDH2 && UDH2.ref_num == UDH1.ref_num){
+					if(UDH2.total_num_of_parts != UDH1.total_num_of_parts)
+						continue;
+					//очередной кусочек найден
+					all_parts[UDH2.this_part_num] = pdu2;
+					obj2.pdu = null;
+				}
+			}
+			/* теперь обработаем все найденные кусочки и соберем
+				 из них одно общее послание */
+			let join_res = join_concatenated_sms_parts(all_parts);
+			if(join_res){
+				pdu1.UD = join_res;
+				res.push(obj);
+			}				
+		}else{
+			//это обычное сообщение(не из кусочков)
+			res.push(obj);
+		}
+	}
+	return res;
+}
+PduSMS.prototype.do_sms_concatenate = do_sms_concatenate;
 
 export default PduSMS;
