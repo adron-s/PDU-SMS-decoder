@@ -392,7 +392,7 @@ class PduSMS {
 	}
 	//*************************************************************************
 	/* выполняет кодирование значений внутренних переменных в PDU строку */
-	encode(obj){
+	encode(obj, ext_res){
 		if(obj)
 			return this.encode_from_obj(obj);
 		let res = [ ];
@@ -421,7 +421,10 @@ class PduSMS {
 		//UDL - длина полезных данных
 		res[i++] = this.b2s(len);
 		res.push(...ud);
-		return res.join('');
+		res = res.join('');
+		if(ext_res)
+			return [ res, len ];
+		return res;
 	}
 	//*************************************************************************
 	/* вспомогательная функция призванная упростить заполнение полей этого объекта перед
@@ -557,6 +560,7 @@ function do_sms_concatenate(objs_list){
 			let all_parts = { };
 			//самый первый кусочек найден
 			all_parts[UDH1.this_part_num] = pdu1;
+			obj.pieces = [ obj.id ];
 			//ищем остальные куски этого послания
 			for(let b = a + 1; b < objs_list.length; b++){
 				let obj2 = objs_list[b];
@@ -570,6 +574,8 @@ function do_sms_concatenate(objs_list){
 					//очередной кусочек найден
 					all_parts[UDH2.this_part_num] = pdu2;
 					obj2.pdu = null;
+					//так же запоминаем все кусочки в массив кусочков
+					obj.pieces.push(obj2.id);
 				}
 			}
 			/* теперь обработаем все найденные кусочки и соберем
