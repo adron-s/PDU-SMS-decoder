@@ -392,7 +392,7 @@ class PduSMS {
 	}
 	//*************************************************************************
 	/* выполняет кодирование значений внутренних переменных в PDU строку */
-	encode(obj, ext_res){
+	encode(obj){
 		if(obj)
 			return this.encode_from_obj(obj);
 		let res = [ ];
@@ -419,12 +419,10 @@ class PduSMS {
 		//UD
 		let [ len, ud ] = this.encode_ud(this.UD, this.DCS);
 		//UDL - длина полезных данных
+		this.UDL = len;
 		res[i++] = this.b2s(len);
 		res.push(...ud);
-		res = res.join('');
-		if(ext_res)
-			return [ res, len ];
-		return res;
+		return res.join('');
 	}
 	//*************************************************************************
 	/* вспомогательная функция призванная упростить заполнение полей этого объекта перед
