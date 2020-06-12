@@ -291,11 +291,29 @@ class PduSMS {
 			   0 — разница положительная
 			   1 — разница отрицательная.
 			 То есть байт 7 в случае часового пояса GMT+3 будет иметь значение 21h. */
-		let vp = parseInt(buf[6], 16);
+		let vp = parseInt(buf[6], 10);
 		let polar = '+';
-		if(vp & 0x80){
-			vp &= 0x7F;
-			polar = '-';
+		if(isNaN(vp)){
+			let val = buf[6];
+			if(val == "A0"){
+				//такое значение выдает багованной прошивкий в EP06 для New York(GMT-4)
+				vp = 16;
+				polar = '-';
+			}else{
+				/* парсинг не удался(возможно баги в прошивке модема и значение отдается не верно!).
+					 пробуем просто взять текущый time zone offset браузера */
+				let d = new Date();
+				vp = d.getTimezoneOffset() / -60 * 4
+				if(vp < 0){
+					polar = '-';
+					vp *= -1;
+				}
+			}
+		}else{
+			if(vp & 0x80){
+				vp &= 0x7F;
+				polar = '-';
+			}
 		}
 		vp = Math.floor(vp / 4);
 		res += 'GMT' + polar + vp;
