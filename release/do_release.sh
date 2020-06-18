@@ -23,3 +23,4 @@ obfusc(){
 rm -Rf ./res
 mkdir ./res
 obfusc pdu-sms.js
+cat ./res/pdu-sms.js > /home/adron/vscode/mstp-web/nodejs/app/js/pdu-sms.js
