@@ -75,16 +75,22 @@ class PduSMS {
 	}
 	//*************************************************************************
 	/* декодер gsm7 Uint8Array массива в строку */
-	gsm7_to_str(buf, len){
+	gsm7_to_str(buf, len, skip_count=0){
 		let res = "";
 		let um = 0, ur = 0;
 		for(let a = 0; a < buf.length; a++){
 			let d = buf[a];
 			let v = ((d << ur++) | um) & 0x7F;
 			um = (d >> (8 - ur));
-			res += this.gsm7_gc(v);
+			if(skip_count == 0)
+				res += this.gsm7_gc(v);
+			else
+				skip_count--;
 			if(ur >= 7){
-				res += this.gsm7_gc(um);
+				if(skip_count == 0)
+					res += this.gsm7_gc(um);
+				else
+					skip_count--;
 				um = 0; ur = 0;
 			}
 		}
@@ -143,7 +149,7 @@ class PduSMS {
 	}
 	//*************************************************************************
 	/* декодер ucs2 Uint8Array массива в строку */
-	ucs2_to_str(buf, len){
+	ucs2_to_str(buf, len, skip_count=0){
 		let buf16 = [ ];
 		for(let a = 0; a < buf.length; a++){
 			if(a & 0x1)
@@ -153,6 +159,8 @@ class PduSMS {
 		let res = String.fromCharCode.apply(null, buf16);
 		if(res.length > len)
 			res = res.substr(0, len);
+		if(skip_count)
+			res = res.substr(skip_count, len - skip_count);
 		return res;
 	}
 	//*************************************************************************
@@ -215,7 +223,9 @@ class PduSMS {
 			len -= 1;
 		}else{ /* DA */
 			//длина указывает на !кол-во цифер! в номере. переводим в кол-во байт занятых под номер.
-			len = Math.round((len + 1) / 2);
+			if(len % 2)
+				len += 1;
+			len = Math.round(len / 2);
 		}
 		//на данном этапе len это кол-во байт полезных данных номера
 		if(buf.length < len + 2) //+2 так как есть еще байты длины и типа
@@ -366,7 +376,7 @@ class PduSMS {
 		}else{
 			this.VP = null;
 		}
-		//console.dir(buft2hex8(buf), { maxArrayLength: 1 });
+		//console.dir(buf2hex8(buf), { maxArrayLength: 1 });
 		this.UDL = buf[0];
 		buf = buf.slice(1);
 		//все. остались только полезные данные.
@@ -383,14 +393,16 @@ class PduSMS {
 			return false;
 		buf = this.decode_header(buf);
 		let len = this.UDL;
+		let skip_count = 0;
+		/* для gsm7 len в септетах(7-ми битовые блоки) !!! причем длина включает
+			 в себя и UDH(если он конечно есть) */
 		if(this.UDHI){ //если есть заголовок
 			/* он может присутствовать чтобы указать на тип контента в UD(SMS body).
-				 например я его встречал в содержащих url сообщениях. */
-			len = buf[0] + 1; //длина user заголовка
-			this.UDH = buf.slice(0, len);
-			buf = buf.slice(len);
-			//содержимое заголовка мы просто игнорируем
-			len = this.UDL - len;
+				 например я его встречал в содержащих url сообщениях. подробнее тут:
+				 https://en.wikipedia.org/wiki/User_Data_Header. этот код далеко не идеален
+				 но пока что вот так...по крайней мере так текст СМС-ок будет всегда видно
+				 (возможно с небольшим мусором) и сломанной конкатенацией больших SMS-ок! */
+			skip_count = buf[0] + 1;
 		}
 		//console.dir(buf2hex8(buf), { maxArrayLength: 20 });
 		/* схема кодирования данных в поле данных. Фактически здесь используется только два варианта:
@@ -399,9 +411,9 @@ class PduSMS {
 			 08h - кодировка UCS2, используется для передачи кириллицы.
 				Один символ кодируется 2-мя байтами. Можно передать только 70 символов в одном сообщении. */
 		if(this.DCS == 0) //кодировка gsm7
-			this.UD = this.gsm7_to_str(buf, len);
+			this.UD = this.gsm7_to_str(buf, len, skip_count);
 		else if(this.DCS == 8) //кодировка UCS2
-			this.UD = this.ucs2_to_str(buf, Math.floor(len / 2));
+			this.UD = this.ucs2_to_str(buf, Math.floor(len / 2), Math.floor(skip_count / 2));
 		else
 			console.warn("Unknown encoding:", this.DCS);
 		if(this.UD)
