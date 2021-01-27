@@ -75,30 +75,47 @@ class PduSMS {
 	}
 	//*************************************************************************
 	/* декодер gsm7 Uint8Array массива в строку */
-	gsm7_to_str(buf, len, skip_count=0){
-		let res = "";
+	gsm7_to_str(buf, len){
+		return this.sept_arr_to_str(this.sept_ara2ara(buf), len);
+	}
+	//*************************************************************************
+	/* декодер gsm7 Uint8Array массива в Array септетов(берутся 7-ми
+		 битные септеты и помещаются в итоговый массив).
+		 если тоже самое сделать на всяких padStart-ах, map-ах, revers-ах и
+		 join-ах с match-ами то оно будет в примерно 100 раз медленнее!
+		 я проверял! то есть чистая математика намного быстрее операций
+		 со строками! */
+	sept_ara2ara(buf){
+		let res = [ ];
 		let um = 0, ur = 0;
 		for(let a = 0; a < buf.length; a++){
 			let d = buf[a];
 			let v = ((d << ur++) | um) & 0x7F;
 			um = (d >> (8 - ur));
-			if(skip_count == 0)
-				res += this.gsm7_gc(v);
-			else
-				skip_count--;
+			res.push(v);
 			if(ur >= 7){
-				if(skip_count == 0)
-					res += this.gsm7_gc(um);
-				else
-					skip_count--;
+				res.push(um);
 				um = 0; ur = 0;
 			}
 		}
-		/* итогда бывает невожможно определить длину с последним символом.
-			 для этого и передается целевая длина результата */
-		if(res.length > len)
-			res = res.substr(0, len);
+		//учитываем хвостик(если он есть)
+		if(ur > 0)
+			res.push(um);
 		return res;
+	}
+	//*************************************************************************
+	/* а это тоже самое только в 100 раз медленее! */
+	sept_ara2ara2(buf){
+		buf = buf.map(v => v.toString(2).padStart(8, "0")).reverse().join('');
+		buf = buf.padStart(buf.length + 7 - buf.length % 7, "0");
+		return buf.match(/[0-1]{7}/g).map(v => parseInt(v, 2)).reverse();
+	}
+	//*************************************************************************
+	/* преобразует массив состоящий из септетов(gsm7 кодировка) в строку символов */
+	sept_arr_to_str(buf, len){
+		if(buf.length > len)
+			buf = buf.slice(0, len);
+		return buf.map(v => this.gsm7_gc(v)).join('');
 	}
 	//*************************************************************************
 	/* кодер строки в gsm7 */
@@ -148,20 +165,14 @@ class PduSMS {
 		return [ len, res ]; //длина в символах!
 	}
 	//*************************************************************************
-	/* декодер ucs2 Uint8Array массива в строку */
-	ucs2_to_str(buf, len, skip_count=0){
+	/* декодер ucs2 массива в строку. buf может быть обычным(не Uint8 массивом). */
+	ucs2_to_str(buf, len){
 		let buf16 = [ ];
-		for(let a = 0; a < buf.length; a++){
-			if(a & 0x1)
-				buf16.push((buf[a - 1] << 8) | buf[a]);
-		}
+		len = Math.floor(len / 2) * 2;
+		for(let a = 1; a < len; a += 2)
+			buf16.push((buf[a - 1] << 8) | buf[a]);
 		buf16 = new Uint16Array(buf16);
-		let res = String.fromCharCode.apply(null, buf16);
-		if(res.length > len)
-			res = res.substr(0, len);
-		if(skip_count)
-			res = res.substr(skip_count, len - skip_count);
-		return res;
+		return String.fromCharCode.apply(null, buf16);
 	}
 	//*************************************************************************
 	/* кодер строки в ucs2 */
@@ -234,7 +245,7 @@ class PduSMS {
 		/* про ToN И его возможные значения смотри в:
 			 https://github.com/tladesignz/jsPduDecoder/blob/master/source/jspdudecoder.js */
 		if(ToN == 0x50){ //Alphanumeric - номер в виде строки. например "Tele2".
-			num = this.gsm7_to_str(num);
+			num = this.gsm7_to_str(num, len);
 		}else{ //номер в цифровом виде(как ему и положено быть)
 			num = Array.from(num);
 			num = this.cut_lastF(this.number_reverse(num)).join('');
@@ -393,16 +404,32 @@ class PduSMS {
 			return false;
 		buf = this.decode_header(buf);
 		let len = this.UDL;
+		/* для gsm7 len(UDL) в септетах(7-ми битовые блоки) !!! причем длина включает
+			 в себя и UDH(если он конечно есть). фактически UDH является частью
+			 массива UD! */
 		let skip_count = 0;
-		/* для gsm7 len в септетах(7-ми битовые блоки) !!! причем длина включает
-			 в себя и UDH(если он конечно есть) */
-		if(this.UDHI){ //если есть заголовок
+		if(this.UDHI){ /* если есть UDH заголовок */
+			skip_count = buf[0] + 1; //+1 для учета септета длины UDH заголовка
 			/* он может присутствовать чтобы указать на тип контента в UD(SMS body).
 				 например я его встречал в содержащих url сообщениях. подробнее тут:
-				 https://en.wikipedia.org/wiki/User_Data_Header. этот код далеко не идеален
-				 но пока что вот так...по крайней мере так текст СМС-ок будет всегда видно
-				 (возможно с небольшим мусором) и сломанной конкатенацией больших SMS-ок! */
-			skip_count = buf[0] + 1;
+				 https://en.wikipedia.org/wiki/User_Data_Header */
+			if(this.DCS == 0){ //если это gsm7 кодировка
+				/* при 7-битном кодировании UDHL содержит длину в 8 битных октетах!
+					 и UDH тоже должен быть в 8-юитных октетах(он используется для сборки
+					 кусочков больших SMS-ок в единое целое) */
+				this.UDH = buf.slice(0, skip_count);
+				//преобразуем в массив септетов
+				buf = this.sept_ara2ara(buf);
+				//рассчитываем сколько септетов нужно отрезать от buf(в них был закодирован UDH)
+				skip_count = Math.floor((skip_count) * 8 / 7) + 1;
+				//отрезаем их
+				buf.splice(0, skip_count);
+			}else{
+				/* а тут все намного проще чем с gsm7 */
+				buf = Array.from(buf); //из Uint8Array в обычный(чтобы splice работал)
+				this.UDH = buf.splice(0, skip_count);
+			}
+			len -= skip_count;
 		}
 		//console.dir(buf2hex8(buf), { maxArrayLength: 20 });
 		/* схема кодирования данных в поле данных. Фактически здесь используется только два варианта:
@@ -411,9 +438,9 @@ class PduSMS {
 			 08h - кодировка UCS2, используется для передачи кириллицы.
 				Один символ кодируется 2-мя байтами. Можно передать только 70 символов в одном сообщении. */
 		if(this.DCS == 0) //кодировка gsm7
-			this.UD = this.gsm7_to_str(buf, len, skip_count);
+			this.UD = this.sept_arr_to_str(buf, len);
 		else if(this.DCS == 8) //кодировка UCS2
-			this.UD = this.ucs2_to_str(buf, Math.floor(len / 2), Math.floor(skip_count / 2));
+			this.UD = this.ucs2_to_str(buf, len);
 		else
 			console.warn("Unknown encoding:", this.DCS);
 		if(this.UD)
@@ -556,9 +583,9 @@ function decode_parted_UDH(UDH){
 	 к одной и той же concated SMS */
 function check_for_sms_concated_signs(pdu1, pdu2){
 	if(!pdu1 || !pdu2)
-		return false;		
+		return false;	
 	if(pdu1.DA != pdu2.DA)
-		return false; //номера отправителей разные 
+		return false; //номера отправителей разные
 	if(pdu1.VP != pdu2.VP){
 		let t1 = new Date(pdu1.VP);
 		let t2 = new Date(pdu2.VP);
@@ -592,7 +619,7 @@ function do_sms_concatenate(objs_list){
 			//ищем остальные куски этого послания
 			for(let b = a + 1; b < objs_list.length; b++){
 				let obj2 = objs_list[b];
-				let pdu2 = obj2.pdu;					
+				let pdu2 = obj2.pdu;
 				if(!check_for_sms_concated_signs(pdu1, pdu2))
 					continue;
 				let UDH2 = decode_parted_UDH(pdu2.UDH);
@@ -612,7 +639,7 @@ function do_sms_concatenate(objs_list){
 			if(join_res){
 				pdu1.UD = join_res;
 				res.push(obj);
-			}				
+			}
 		}else{
 			//это обычное сообщение(не из кусочков)
 			res.push(obj);
@@ -621,5 +648,7 @@ function do_sms_concatenate(objs_list){
 	return res;
 }
 PduSMS.prototype.do_sms_concatenate = do_sms_concatenate;
+PduSMS.prototype.buf2hex8 = buf2hex8;
+PduSMS.prototype.buf2hex16 = buf2hex16;
 
 export default PduSMS;

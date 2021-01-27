@@ -1,6 +1,8 @@
 "use strict";
 
 import PduSMS from './pdu-sms.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 let pdu = new PduSMS();
 
@@ -30,8 +32,15 @@ let buf10 = '07917951551555816006D0E4BA0B000002014151644261A0' + '0500032E0504' 
 	'F078FCAEBBE9A0B71C340EB3D9A0FA1C14A68360B41B8C26CBD56E20F35B0E6ABFE56550DA6D7ECBDB617AFAED7681926650FE5D9783E0E17CBBECA683D0E13928CC9697C3E43C485C2EBB41F3BAB89DA6D3CB6416E85E06D1D161F71A947FD741613719046797C3F332889C9ECBCBE7B09C0CA2A3D37390FB4D4F8FCB';
 //0B 91 7360466237F
 let bufs = [ buf10 ] //buf1, buf2, buf3, buf4 ];
-//bufs = require('fs').readFileSync("./data.txt").toString().split("\n");
+bufs = require('fs').readFileSync("./data2-oae.txt").toString().split("\n");
+let pdu_objs_list = [ ];
 bufs.forEach((buf, i) => {
+	pdu_objs_list.push({
+		id: i + 1,
+		pdu: new PduSMS(buf),
+		raw_data: buf,
+	}); return;
+	
 	//console.log(i);
 	console.log(buf, buf.length);
 	if(pdu.decode(buf) === false)
@@ -39,3 +48,6 @@ bufs.forEach((buf, i) => {
 	console.log(pdu.toString());
 	console.log("");
 });
+//а это тест на сборку огромного сообщения из кусочков
+pdu_objs_list = PduSMS.prototype.do_sms_concatenate(pdu_objs_list);
+//console.log(pdu_objs_list);
