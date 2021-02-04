@@ -430,6 +430,11 @@ class PduSMS {
 				this.UDH = buf.splice(0, skip_count);
 			}
 			len -= skip_count;
+		}else{ /* если заголовка UDH нет */
+			if(this.DCS == 0){ //если это gsm7 кодировка
+				//преобразуем в массив септетов
+				buf = this.sept_ara2ara(buf);
+			}
 		}
 		//console.dir(buf2hex8(buf), { maxArrayLength: 20 });
 		/* схема кодирования данных в поле данных. Фактически здесь используется только два варианта:

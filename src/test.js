@@ -30,18 +30,18 @@ let buf8  = '07917360489991F9' + '040B917360466237F1000802602132913321060410043A
 let buf9  = '0791795155155581' + '6406D0E4BA0B000002014151644261080500032E05055C';
 let buf10 = '07917951551555816006D0E4BA0B000002014151644261A0' + '0500032E0504' + 'E8747619947FD7E5A0' +
 	'F078FCAEBBE9A0B71C340EB3D9A0FA1C14A68360B41B8C26CBD56E20F35B0E6ABFE56550DA6D7ECBDB617AFAED7681926650FE5D9783E0E17CBBECA683D0E13928CC9697C3E43C485C2EBB41F3BAB89DA6D3CB6416E85E06D1D161F71A947FD741613719046797C3F332889C9ECBCBE7B09C0CA2A3D37390FB4D4F8FCB';
-//0B 91 7360466237F
+	let buf11 = '07917360899928F12407D0D1797B0E0000122040805353802834994C668B8150D4B27B5C76D34143F6BB4E0659CBF2B4393D0ED3D36F3768F8269753';
 let bufs = [ buf10 ] //buf1, buf2, buf3, buf4 ];
-bufs = require('fs').readFileSync("./data2-oae.txt").toString().split("\n");
+//bufs = require('fs').readFileSync("./data2-oae.txt").toString().split("\n");
 let pdu_objs_list = [ ];
 bufs.forEach((buf, i) => {
-	pdu_objs_list.push({
+/*	pdu_objs_list.push({
 		id: i + 1,
 		pdu: new PduSMS(buf),
 		raw_data: buf,
-	}); return;
-	
-	//console.log(i);
+	}); */
+
+	console.log(i);
 	console.log(buf, buf.length);
 	if(pdu.decode(buf) === false)
 		return;
@@ -49,5 +49,5 @@ bufs.forEach((buf, i) => {
 	console.log("");
 });
 //а это тест на сборку огромного сообщения из кусочков
-pdu_objs_list = PduSMS.prototype.do_sms_concatenate(pdu_objs_list);
+//pdu_objs_list = PduSMS.prototype.do_sms_concatenate(pdu_objs_list);
 //console.log(pdu_objs_list);
